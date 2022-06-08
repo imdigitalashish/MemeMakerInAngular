@@ -1,0 +1,11 @@
+<canvas #myCanvas></canvas>
+<br>
+<div style="display: flex;">
+    <button (click)="addText();" class="customMargin btn btn-primary">Add Text</button>
+    <input type="text" class="customMargin customInput" (input)="changeTheText();"  [(ngModel)]="textWritten" />
+    <button (click)="changeFontSize('increase')" class="customMargin btn btn-dark">+</button>
+    <button (click)="changeFontSize('decrease')" class="customMargin btn btn-dark">-</button>
+    <ngx-colors ngx-colors-trigger (change)="colorChange();" [(ngModel)]="EditorState.color"></ngx-colors> 
+</div>
+
+<button class="btn btn-success" (click)="downloadCanvas();">Download</button>

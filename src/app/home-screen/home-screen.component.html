@@ -1,0 +1,18 @@
+<div class="header">
+    <h2>If Meme Maker</h2>
+</div>
+<br>
+<h3 style="text-align: center;">Choose from a template below</h3>
+
+<div class="listOfCards">
+
+    <div *ngFor="let meme of listOfMemes;index as i">
+        <div class="card" style="width: 19rem;margin-top: 20px;box-shadow: 14px 10px 29px 5px rgba(214,214,214,1);">
+            <img style="height: 16rem;" class="card-img-top" src="{{meme.url}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{meme.name}}</h5>
+                <a (click)="selectAMeme(i);" class="btn btn-primary">Use This</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.customMargin {
+    margin: 10px;
+}
+
+.customInput {
+    border-radius: 10px;
+    border: 1px solid grey;
+    padding-left: 10px;
+}
+.customInput:focus {
+    outline: none;
+
+}
