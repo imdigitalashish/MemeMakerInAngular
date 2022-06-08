@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, TestabilityRegistry, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Host, HostListener, Input, OnInit, TestabilityRegistry, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meme } from 'src/models/meme';
 
@@ -107,6 +107,29 @@ export class MemeEditScreenComponent implements OnInit, AfterViewInit {
     this.textWritten = "Hello";
   }
 
+
+  @HostListener("touchstart", ['$event'])
+  touchMove(e: TouchEvent) {
+    this.EditorState.mouseDown = true;
+    this.listOfTexts.forEach((elem, index) => {
+      let heightOfText = elem.fontSize * 1.286;
+
+      let widthOfText = this.context.measureText(elem.textVal).width;
+      console.log(heightOfText, widthOfText);
+      if (e.touches[0].clientX > elem.x && e.touches[0].clientX < elem.x + widthOfText && e.touches[0].clientY < elem.y && e.touches[0].clientY > elem.y - heightOfText) {
+        elem.selected = true;
+        this.textWritten = elem.textVal;
+        this.listOfTexts.forEach((Allelem, excludedIndex) => {
+          if (excludedIndex != index) {
+            Allelem.selected = false;
+          }
+        })
+        console.log("ACTIVATED");
+
+      }
+    });
+  }
+
   @HostListener("mousedown", ['$event'])
   mouseMove(e: MouseEvent) {
     this.EditorState.mouseDown = true;
@@ -129,6 +152,25 @@ export class MemeEditScreenComponent implements OnInit, AfterViewInit {
     });
   }
 
+
+
+  @HostListener("touchmove", ['$event'])
+  touchMoveText(e: TouchEvent) {
+    if (this.EditorState.mouseDown) {
+      this.listOfTexts.forEach(elem => {
+        if (elem.selected) {
+          elem.x = e.touches[0].clientX;
+          elem.y = e.touches[0].clientY;
+          console.log(elem.selected, elem.x);
+          this.redrawCanvas();
+        }
+
+      })
+    }
+  }
+
+
+
   @HostListener("mousemove", ["$event"])
   mouseMoveText(e: MouseEvent) {
     if (this.EditorState.mouseDown) {
@@ -142,6 +184,12 @@ export class MemeEditScreenComponent implements OnInit, AfterViewInit {
 
       })
     }
+  }
+
+  @HostListener("touchend", ['$event'])
+  touchUpEvent(e: TouchEvent) {
+    this.EditorState.mouseDown = false;
+
   }
 
 
