@@ -19,6 +19,7 @@ export class HomeScreenComponent implements OnInit {
   ngOnInit(): void {
     this.mems.getMemesList().subscribe((res) => {
       this.listOfMemes = res.data.memes;
+      this.listOfMemes.splice(2, 1);
     });
   }
 
